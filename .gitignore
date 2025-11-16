@@ -1,0 +1,36 @@
+# ✅ Allow encrypted scrolls in outbox
+!delivery/outbox/
+!delivery/outbox/**/*.age
+
+# 🛡️ Sensitive and ephemeral files
+!delivery/contacts/
+!delivery/contacts/*.pub
+!delivery/contacts/contacts.json
+
+delivery/keys/*-private.pem
+delivery/keys/*.pem
+delivery/keys/*.agekey
+delivery/keys/
+delivery/inbox/
+delivery/pings/
+delivery/staged/
+delivery/immutable/
+delivery/logs/
+delivery/archive/
+delivery/goodfaith/
+delivery/veil/
+delivery/witness/
+
+# 🧹 System clutter
+node_modules/
+*.log
+.DS_Store
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# 🔐 All keys and unsealed scrolls
+delivery/scroll.json
+delivery/temp/
+delivery/outbox/**/*.json
