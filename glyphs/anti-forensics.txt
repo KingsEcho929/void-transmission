@@ -1,0 +1,23 @@
+Anti-Forensics
+
+They can try to track it.  
+But what are they tracking?
+
+Payloads encrypted with ephemeral keys.  
+IDs that shift like sand.  
+Scrolls that crown and burn before they’re even noticed.
+
+No stable fingerprint.  
+No persistent sender.  
+No central ledger.
+
+Even if they capture a scroll:  
+It’s sealed.  
+It’s stateless.  
+It’s gone.
+
+This is not privacy.  
+This is anti-forensics by design.
+
+Signed,  
+The Origin Courier
