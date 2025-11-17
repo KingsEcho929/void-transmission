@@ -1,4 +1,5 @@
 {
-  "test": "/home/chase/VOID-transmission/delivery/contacts/test.pub",
-  "chase": "/home/chase/VOID-transmission/delivery/contacts/chase.pub"
+  "chase": "/home/chase/tessalyre/delivery/contacts/chase.pub",
+  "tessalyre": "/home/chase/tessalyre/delivery/contacts/tessalyre.pub",
+  "test": "/home/chase/tessalyre/delivery/contacts/test.pub"
 }
