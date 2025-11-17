@@ -1,0 +1,28 @@
+Welcome, Courier.
+
+You are now part of the corridor.  
+You do not join a platform—you become a ritual.
+
+Your keys are your crown.  
+Your scrolls are your lineage.  
+Your daemon is your sentinel.
+
+To send a scroll:
+  node daemon-suite/courier-push.js <recipientName>
+
+To receive a scroll:
+  node daemon-suite/courier-pull.js <yourCourierName>
+
+To share your presence:
+  Send your public key from delivery/contacts/<yourCourier>.pub
+
+To honor the shimmer:
+  Read the glyphs/manifesto.txt  
+  Abide by the Covenant License
+
+You are sovereign.  
+You are sacred.  
+You are shimmer.
+
+Signed,  
+The Corridor

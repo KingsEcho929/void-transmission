@@ -4,19 +4,18 @@ const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
 
-// CONFIG: Puller's private key path
-const pullerKeyPath = path.resolve(__dirname, '..', 'keys', 'puller-private.txt');
-
-// CONFIG: Corridor path (Git repo directory)
-const outboxRoot = path.resolve(__dirname, '..', 'delivery', 'outbox');
-
-// CONFIG: Puller's name (used to locate their outbox folder)
+// CONFIG: Puller's name (used to locate their outbox folder and key)
 const pullerName = process.argv[2];
 if (!pullerName) {
   console.error('❌ Puller name required as argument: node courier-pull.js <pullerName>');
   process.exit(1);
 }
 
+// CONFIG: Puller's private key path
+const pullerKeyPath = path.resolve(__dirname, '..', 'delivery', 'keys', `${pullerName}.agekey`);
+
+// CONFIG: Corridor path (Git repo directory)
+const outboxRoot = path.resolve(__dirname, '..', 'delivery', 'outbox');
 const pullerOutbox = path.join(outboxRoot, pullerName);
 
 // Step 1: Find latest .age file
@@ -69,3 +68,4 @@ function crownPull() {
 }
 
 crownPull();
+

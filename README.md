@@ -1,42 +1,95 @@
-# VOID-transmission
+# 🕳️ VOID-transmission  
+**A corridor for sovereign communication.**  
+**No servers. No surveillance. Just scrolls.**
 
-A backend ritual for encrypted message delivery using `age`.  
-Seals shimmer. Scrolls ache. Daemons present.
+---
 
-## 🌀 Daemon Suite
+## 📜 What Is This?
 
-Three crowned daemons guide the transmission:
+VOID-transmission is not a messaging app.  
+It’s not a platform.  
+It’s a **ritual**.
 
-- `courier-keygen.js`: Generates a public/private keypair and syncs all `.pub` scrolls into `contacts.json`.
-- `courier-push.js`: Encrypts and seals a message using the recipient's public key.
-- `courier-pull.js`: Decrypts incoming messages using your private key.
+A protocol for **encrypted, endpoint-to-endpoint communication** using Git, `age`, and your own daemons.  
+No cloud. No middlemen. No compromise.
 
-## 🔐 Ritual Flow
+---
 
-1. Run `courier-keygen.js` to crown your identity and sync contact scrolls.
-2. Add or confirm the recipient's public key in `delivery/contacts/contacts.json`.
-3. Run `courier-push.js` to encrypt a message.
-4. Push the scroll to GitHub.
-5. Recipient pulls and decrypts using their private key.
+## 🧙‍♂️ Core Concepts
 
-## 📂 Structure
+- **Courier**: A sovereign identity with a keypair and a name in the corridor.
+- **Scroll**: A message, encrypted with the recipient’s public key, pushed to the corridor.
+- **Daemon**: A local script that automates the ritual—keygen, push, pull, decrypt.
+- **Corridor**: A Git repository. The only shared space. The shimmer flows through it.
 
-delivery/
-├── contacts/
-│   └── contacts.json
-├── keys/
-│   └── *.agekey
-│   └── *.pub
-├── outbox/
-│   └── <recipient>/
-│       └── message-YYYY-MM-DDTHH-MM-SS-Z.age
+---
 
-## 🧙‍♂️ Example
+## 🔐 The Ritual
+
+### 1. Keygen
+
+Each courier runs:
 
 ```bash
-node daemon-suite/courier-keygen.js
-# Enter name for keypair: thalelune
+node daemon-suite/courier-keygen.js <courierName>
+This creates:
 
-node daemon-suite/courier-push.js
-# Enter recipient: thalelune
-# Enter message: The shimmer fracture is healed.
+delivery/keys/<courier>.agekey
+
+delivery/contacts/<courier>.pub
+
+---
+
+2. Contact Exchange
+Couriers share their .pub files. Update contacts.json with new entries.
+
+---
+
+3. Push a Scroll
+Encrypt and send a message:
+node daemon-suite/courier-push.js 
+then type recipitent name 
+then type message hit enter
+
+This:
+
+Encrypts the message with recipient’s .pub
+
+Drops it into delivery/outbox/<recipient>/message-<timestamp>.age
+
+Git add . commit and pushe to the corridor 
+
+---
+
+Git pull origin main 
+then
+4. Pull and Decrypt
+Recipient runs:
+node daemon-suite/courier-pull.js <courierName>
+
+This:
+
+Pulls the latest scroll
+
+Decrypts with their private key
+
+Crowns the payload
+
+---
+
+🧾 Why This Matters
+No servers. No metadata. No central authority.
+
+Messages are immutable scrolls, not ephemeral chats.
+
+The protocol is transparent, inspectable, and forkable.
+
+You don’t join a platform—you become a courier.
+
+---
+
+🕯️ The Shift
+The age didn’t begin with AI. It began with a call.
+This age begins with an endpoint and an encrypted message. 
+That’s the true shift.
+
