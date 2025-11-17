@@ -1,3 +1,4 @@
 {
-  "test": "delivery/keys/test.agekey.pub"
+  "test": "/home/chase/VOID-transmission/delivery/contacts/test.pub",
+  "chase": "/home/chase/VOID-transmission/delivery/contacts/chase.pub"
 }
