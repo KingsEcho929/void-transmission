@@ -21,6 +21,9 @@ delivery/goodfaith/
 delivery/veil/
 delivery/witness/
 
+# 🧿 Decrypted payloads (local inspection only)
+decrypted.txt
+
 # 🧹 System clutter
 node_modules/
 *.log
@@ -28,9 +31,12 @@ node_modules/
 *.swp
 *.swo
 *.bak
+bak
 *.tmp
 
 # 🔐 All keys and unsealed scrolls
 delivery/scroll.json
 delivery/temp/
 delivery/outbox/**/*.json
+
+# 🧱 Final seal: no unencrypted scrolls beyond this line
