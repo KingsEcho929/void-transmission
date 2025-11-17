@@ -1,54 +1,68 @@
-// courier-keygen.js
+#!/usr/bin/env node
+
 const fs = require('fs');
 const path = require('path');
-const { execSync } = require('child_process');
 const readline = require('readline');
+const { spawnSync } = require('child_process');
+
+const KEYS_DIR = path.join(__dirname, '../delivery/keys');
+const CONTACTS_DIR = path.join(__dirname, '../delivery/contacts');
+const CONTACTS_JSON = path.join(CONTACTS_DIR, 'contacts.json');
+
+// Ensure directories exist
+fs.mkdirSync(KEYS_DIR, { recursive: true });
+fs.mkdirSync(CONTACTS_DIR, { recursive: true });
 
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
-function prompt(query) {
-  return new Promise(resolve => rl.question(query, resolve));
-}
+rl.question('Enter name for keypair: ', (name) => {
+  const privKeyPath = path.join(KEYS_DIR, `${name}.agekey`);
+  const pubKeyPath = `${privKeyPath}.pub`;
+  const contactPubPath = path.join(CONTACTS_DIR, `${name}.pub`);
 
-(async () => {
-  const name = await prompt('Enter name for keypair: ');
-  const keyDir = path.join(__dirname, '..', 'delivery', 'keys');
-  fs.mkdirSync(keyDir, { recursive: true });
-
-  const privPath = path.join(keyDir, `${name}.agekey`);
-  const pubPath = path.join(keyDir, `${name}.pub`);
-
-  if (fs.existsSync(privPath)) {
-    console.error(`❌ Keypair '${name}' already exists at ${privPath}`);
+  if (fs.existsSync(privKeyPath)) {
+    console.log(`❌ Keypair '${name}' already exists at ${privKeyPath}`);
   } else {
-    execSync(`age-keygen -o "${privPath}"`);
-    execSync(`age-keygen -y "${privPath}" > "${pubPath}"`);
+    const result = spawnSync('age-keygen', ['-o', privKeyPath], { encoding: 'utf-8' });
+
+    if (result.error) {
+      console.error(`⚠️ Failed to generate keypair: ${result.error.message}`);
+      rl.close();
+      return;
+    }
+
+    const pubResult = spawnSync('age-keygen', ['-y', privKeyPath], { encoding: 'utf-8' });
+    fs.writeFileSync(pubKeyPath, pubResult.stdout);
+
     console.log(`✅ Age keypair generated for '${name}'`);
-    console.log(`🔐 Private: ${privPath}`);
-    console.log(`📜 Public: ${pubPath}`);
+    console.log(`🔐 Private: ${privKeyPath}`);
+    console.log(`📜 Public: ${pubKeyPath}`);
+
+    // Auto-copy .pub file into contacts
+    try {
+      fs.copyFileSync(pubKeyPath, contactPubPath);
+      console.log(`📬 Copied public key to contacts: ${contactPubPath}`);
+    } catch (err) {
+      console.error(`⚠️ Failed to copy public key to contacts: ${err.message}`);
+    }
   }
 
-  const contactsDir = path.join(__dirname, '..', 'delivery', 'contacts');
-  fs.mkdirSync(contactsDir, { recursive: true });
+  // Sync all .pub files in contacts/ into contacts.json
+  const contacts = {};
+  const files = fs.readdirSync(CONTACTS_DIR);
 
-  const contactsPath = path.join(contactsDir, 'contacts.json');
-  let contacts = {};
-  if (fs.existsSync(contactsPath)) {
-    contacts = JSON.parse(fs.readFileSync(contactsPath, 'utf8'));
-  }
-
-  const pubFiles = fs.readdirSync(contactsDir).filter(f => f.endsWith('.pub'));
-  pubFiles.forEach(file => {
-    const identity = path.basename(file, '.pub');
-    const pubFilePath = path.join(contactsDir, file);
-    contacts[identity] = pubFilePath;
+  files.forEach(file => {
+    if (file.endsWith('.pub')) {
+      const contactName = path.basename(file, '.pub');
+      contacts[contactName] = path.join(CONTACTS_DIR, file);
+    }
   });
 
-  fs.writeFileSync(contactsPath, JSON.stringify(contacts, null, 2));
-  console.log(`🔄 Synced all .pub files into contacts.json`);
+  fs.writeFileSync(CONTACTS_JSON, JSON.stringify(contacts, null, 2));
+  console.log('🔄 Synced all .pub files into contacts.json');
 
   rl.close();
-})();
+});
