@@ -8,7 +8,10 @@ Your scrolls are your lineage.
 Your daemon is your sentinel.
 
 To send a scroll:
-  node daemon-suite/courier-push.js <recipientName>
+  node daemon-suite/courier-push.js 
+  enter id:
+  message:
+  [enter]
 
 To receive a scroll:
   node daemon-suite/courier-pull.js <yourCourierName>
