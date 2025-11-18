@@ -59,7 +59,7 @@ Encrypts the message with recipient’s .pub
 
 Drops it into delivery/outbox/<recipient>/message-<timestamp>.age
 
-Git add . commit and pushe to the corridor 
+Git add . commit and push to the corridor 
 
 ---
 
