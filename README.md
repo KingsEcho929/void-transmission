@@ -19,7 +19,7 @@ No cloud. No middlemen. No compromise.
 
 - **Courier**: A sovereign identity with a keypair and a name in the corridor.
 - **Scroll**: A message, encrypted with the recipient’s public key, pushed to the corridor.
-- **Daemon**: A local script that automates the ritual—keygen, push, pull, decrypt.
+- **Daemon**: A local script that automates the ritual—keygen, push, pull, burn.
 - **Corridor**: A Git repository. The only shared space. The shimmer flows through it.
 
 ---
