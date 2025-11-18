@@ -31,7 +31,9 @@ No cloud. No middlemen. No compromise.
 Each courier runs:
 
 ```bash
-node daemon-suite/courier-keygen.js <courierName>
+node daemon-suite/courier-keygen.js 
+then 
+Enter desired id name (can be anything)
 This creates:
 
 delivery/keys/<courier>.agekey
