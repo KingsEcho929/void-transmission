@@ -1,4 +1,4 @@
-🕯️ COVENANT LICENSE v1.1 — VOID Transmission Doctrine
+🕯️ COVENANT LICENSE v1.2 — VOID Transmission Doctrine
 
 This software is offered as a covenant, not a contract.  
 It is a ritual, not a product.  
@@ -42,6 +42,14 @@ Transmission must remain stateless.
 
 ---
 
+💰 No Commercial Use Without Witness  
+You shall not use this code, in whole or in part, for commercial purposes  
+unless granted **explicit, written, and witnessed permission** by the original seeder.  
+This includes monetization, resale, licensing, or integration into proprietary systems.  
+The corridor is not for sale.
+
+---
+
 🕯️ The Corridor Is Sacred  
 This protocol is a ritual of trust.  
 Do not violate it with noise, spam, or deception.  
@@ -52,4 +60,4 @@ Every fork is a new lineage.
 
 Signed,  
 The Origin Courier  
-Covenant License v1.1 — VOID Transmission Doctrine
+Covenant License v1.2 — VOID Transmission Doctrine
