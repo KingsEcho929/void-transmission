@@ -1,40 +1,30 @@
-# 🕳️ VOID-transmission  
-**A corridor for sovereign communication.**  
-**No servers. No surveillance. Just scrolls.**
+🕳️ VOID-transmission  
+A corridor for sovereign communication.  
+No servers. No surveillance. Just scrolls.
 
----
-
-## 📜 What Is This?
-
+📜 What Is This?  
 VOID-transmission is not a messaging app.  
 It’s not a platform.  
-It’s a **ritual**.
+It’s a ritual.
 
-A protocol for **encrypted, endpoint-to-endpoint communication** using Git, `age`, and your own daemons.  
+A protocol for encrypted, endpoint-to-endpoint communication using Git, age, and your own daemons.  
 No cloud. No middlemen. No compromise.
 
----
-
-## 🧙‍♂️ Core Concepts
-
-- **Courier**: A sovereign identity with a keypair and a name in the corridor.
-- **Scroll**: A message, encrypted with the recipient’s public key, pushed to the corridor.
-- **Daemon**: A local script that automates the ritual—keygen, push, pull, burn.
+🧙‍♂️ Core Concepts  
+- **Courier**: A sovereign identity with a keypair and a name in the corridor.  
+- **Scroll**: A message, encrypted with the recipient’s public key, pushed to the corridor.  
+- **Daemon**: A local script that automates the ritual—keygen, push, pull, burn.  
 - **Corridor**: A Git repository. The only shared space. The shimmer flows through it.
 
----
+> ⚠️ Do not modify the daemon scripts. They are sealed. Altering them risks breach or ritual collapse.
 
-## 🔐 The Ritual
+🔐 The Ritual  
 
-### 1. Keygen
-
-Each courier runs:
-
+**1. Keygen**  
 ```bash
-node daemon-suite/courier-keygen.js 
-then 
-Enter desired id name (can be anything)
-This creates:
+node daemon-suite/courier-keygen.js
+
+Enter your desired ID name. This creates:
 
 delivery/keys/<courier>.agekey
 
@@ -42,56 +32,39 @@ delivery/contacts/<courier>.pub
 
 ---
 
-2. Contact Exchange
-Couriers share their .pub files. Update contacts.json with new entries.
+2. Contact Exchange Couriers share their .pub files. Update contacts.json with new entries.
+
+🛑 One or both couriers must push their contact updates to Git before syncing. If neither pushes, the corridor cannot sync. The shimmer refuses ambiguity.
 
 ---
 
 3. Push a Scroll
-Encrypt and send a message:
-node daemon-suite/courier-push.js 
-then type recipitent name 
-then type message hit enter
+node daemon-suite/courier-push.js
 
-This:
+Enter recipient name → type message → hit enter. This:
 
-Encrypts the message with recipient’s .pub
+Encrypts with recipient’s .pub
 
-Drops it into delivery/outbox/<recipient>/message-<timestamp>.age
+Drops into delivery/outbox/<recipient>/message-<timestamp>.age
 
-Git add . commit and push to the corridor 
+Git add → commit → push
+
+🔁 Push-to-pull only. Never push-to-push. Simultaneous pushes will cross up the ritual. The corridor must breathe in cadence.
 
 ---
 
-Git pull origin main 
-then
 4. Pull and Decrypt
-Recipient runs:
 node daemon-suite/courier-pull.js <courierName>
 
 This:
 
 Pulls the latest scroll
 
-Decrypts with their private key
+Decrypts with your private key
 
 Crowns the payload
 
----
+🧾 Why This Matters No servers. No metadata. No central authority. Messages are immutable scrolls, not ephemeral chats. You don’t join a platform—you become a courier.
 
-🧾 Why This Matters
-No servers. No metadata. No central authority.
-
-Messages are immutable scrolls, not ephemeral chats.
-
-The protocol is transparent, inspectable, and forkable.
-
-You don’t join a platform—you become a courier.
-
----
-
-🕯️ The Shift
-The age didn’t begin with AI. It began with a call.
-This age begins with an endpoint and an encrypted message. 
-That’s the true shift.
+🕯️ The Shift The age didn’t begin with AI. It began with a call. This age begins with an endpoint and an encrypted message. That’s the true shift.
 
