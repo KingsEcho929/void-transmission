@@ -1,0 +1,34 @@
+{
+  "daemons": [
+    {
+      "name": "courier-keygen",
+      "path": "daemon-suite/courier-keygen.js",
+      "scroll": "README.md",
+      "law": "keygen.yml"
+    },
+    {
+      "name": "courier-push",
+      "path": "daemon-suite/courier-push.js",
+      "scroll": "README.md",
+      "law": "push.yml"
+    },
+    {
+      "name": "courier-pull",
+      "path": "daemon-suite/courier-pull.js",
+      "scroll": "README.md",
+      "law": "pull.yml"
+    },
+    {
+      "name": "courier-burn",
+      "path": "daemon-suite/courier-burn.js",
+      "scroll": "README.md",
+      "law": "burn.yml"
+    },
+    {
+      "name": "void-transmission",
+      "path": "index.html",
+      "scroll": "README.md",
+      "law": "serve.yml"
+    }
+  ]
+}

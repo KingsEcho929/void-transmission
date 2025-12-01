@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
@@ -14,6 +16,18 @@ const readline = require('readline');
   const repoRoot = path.resolve(__dirname, '..');
   const contactsPath = path.join(repoRoot, 'delivery', 'contacts', 'contacts.json');
   const outboxDir = path.join(repoRoot, 'delivery', 'outbox');
+  const currentIdPath = path.join(repoRoot, 'delivery', 'current-id.json');
+
+  // Load active courier identity
+  let activeCourier = "unknown";
+  if (fs.existsSync(currentIdPath)) {
+    try {
+      const idData = JSON.parse(fs.readFileSync(currentIdPath, 'utf8'));
+      activeCourier = idData.active || "unknown";
+    } catch (err) {
+      console.error("⚠️ Failed to read current-id.json:", err.message);
+    }
+  }
 
   const recipient = (await ask('Enter recipient name: ')).trim();
   const message = await ask('Enter message: ');
@@ -58,4 +72,25 @@ const readline = require('readline');
   }
 
   console.log(`✅ Message encrypted and saved to ${outFile}`);
+
+  // Git lineage steps
+  const gitAdd = spawnSync('git', ['add', '.'], { encoding: 'utf8' });
+  if (gitAdd.status !== 0) {
+    console.error('❌ git add failed:', gitAdd.stderr);
+    return;
+  }
+
+  const gitCommit = spawnSync('git', ['commit', '-m', `pulse from ${activeCourier} to ${recipient}`], { encoding: 'utf8' });
+  if (gitCommit.status !== 0) {
+    console.error('❌ git commit failed:', gitCommit.stderr);
+    return;
+  }
+
+  const gitPush = spawnSync('git', ['push'], { encoding: 'utf8' });
+  if (gitPush.status !== 0) {
+    console.error('❌ git push failed:', gitPush.stderr);
+    return;
+  }
+
+  console.log('🚀 Scroll pushed to corridor (GitHub vault)');
 })();
