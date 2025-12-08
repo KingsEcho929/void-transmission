@@ -2,14 +2,7 @@
 !delivery/outbox/
 !delivery/outbox/**/*.age
 
-# 🛡️ Sensitive and ephemeral files
-!delivery/contacts/
-!delivery/contacts/*.pub
-!delivery/contacts/contacts.json
-
-delivery/keys/*-private.pem
-delivery/keys/*.pem
-delivery/keys/*.agekey
+# 🛡️ Sensitive and ephemeral files (never commit private keys or decrypted payloads)
 delivery/keys/
 delivery/inbox/
 delivery/pings/
@@ -21,11 +14,18 @@ delivery/goodfaith/
 delivery/veil/
 delivery/witness/
 
+# Contacts: track only public keys, veil everything else
+!delivery/contacts/
+!delivery/contacts/*.pub
+# Uncomment if you want to track contacts.json
+# !delivery/contacts/contacts.json
+
 # 🧿 Decrypted payloads (local inspection only)
 decrypted.txt
 
 # 🧹 System clutter
 node_modules/
+package-lock.json
 *.log
 .DS_Store
 *.swp
