@@ -1,38 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Void Transmission</title>
-  <style>
-    body { font-family: monospace; background: #0d0d0d; color: #e0e0e0; }
-    .send-button { background: #222; color: #fff; padding: 10px; border: none; cursor: pointer; }
-    .dropdown { display: none; position: absolute; background: #333; min-width: 200px; }
-    .dropdown a { color: #fff; padding: 8px 12px; display: block; text-decoration: none; }
-    .dropdown a:hover { background: #444; }
-  </style>
+  <title>Void Transmission Shrine</title>
 </head>
 <body>
-  <h1>🌌 Void Transmission</h1>
-  <button class="send-button" onclick="toggleDropdown()">Send ▼</button>
-  <div id="dropdown" class="dropdown">
-    <a href="#" onclick="runDaemon('keygen')">🔐 Keygen</a>
-    <a href="#" onclick="runDaemon('sync-contacts')">📇 Sync Contacts</a>
-    <a href="#" onclick="runDaemon('courier-push')">📤 Courier Push</a>
-    <a href="#" onclick="runDaemon('git-add')">➕ Git Add</a>
-    <a href="#" onclick="runDaemon('git-commit')">📝 Git Commit</a>
-    <a href="#" onclick="runDaemon('git-push')">🚀 Git Push</a>
-    <a href="#" onclick="runDaemon('courier-pull')">📥 Courier Pull</a>
-  </div>
+  <h1>📜 Void Transmission</h1>
+
+  <div id="buttons"></div>
+  <div id="status"></div>
 
   <script>
-    function toggleDropdown() {
-      const dd = document.getElementById("dropdown");
-      dd.style.display = dd.style.display === "block" ? "none" : "block";
-    }
-    function runDaemon(action) {
-      alert("Invoking " + action + " daemon...");
-      // Here you would wire to node scripts or backend calls
-    }
+  async function loadRegistry() {
+    const res = await fetch("/registry.json");
+    const registry = await res.json();
+    const buttonsDiv = document.getElementById("buttons");
+
+    registry.daemons.forEach(daemon => {
+      const btn = document.createElement("button");
+      // Fallback: use daemon.name if no symbol is defined
+      btn.textContent = daemon.symbol || daemon.name;
+
+      btn.onclick = async () => {
+        let payload = {};
+        // Prompt logic based on daemon name
+        if (daemon.name === "courier-keygen") {
+          payload.courier = prompt("Enter courier name for keygen:");
+        } else if (daemon.name === "courier-push") {
+          payload.recipient = prompt("Enter recipient name:");
+          payload.message = prompt("Enter message text:");
+        } else if (daemon.name === "courier-pull") {
+          payload.courier = prompt("Enter courier name:");
+        } else if (daemon.name === "courier-burn") {
+          payload.courier = prompt("Enter courier name to burn:");
+        }
+        const res = await fetch(`/${daemon.name}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        const result = await res.json();
+        document.getElementById("status").innerText = result.status;
+      };
+
+      buttonsDiv.appendChild(btn);
+    });
+  }
+
+  loadRegistry();
   </script>
 </body>
 </html>
+

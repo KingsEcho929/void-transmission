@@ -4,31 +4,61 @@
       "name": "courier-keygen",
       "path": "daemon-suite/courier-keygen.js",
       "scroll": "README.md",
-      "law": "keygen.yml"
+      "law": "keygen.yml",
+      "symbol": "🔑 Keygen",
+      "ritual": [
+        "generate age keypair",
+        "copy public key into contacts",
+        "sync contacts.json",
+        "purge temp staging chamber"
+      ]
     },
     {
       "name": "courier-push",
       "path": "daemon-suite/courier-push.js",
       "scroll": "README.md",
-      "law": "push.yml"
+      "law": "push.yml",
+      "symbol": "🚀 Push Scroll",
+      "ritual": [
+        "write message into temp",
+        "encrypt with age",
+        "place sealed scroll in outbox",
+        "git commit + push",
+        "purge temp staging chamber"
+      ]
     },
     {
       "name": "courier-pull",
       "path": "daemon-suite/courier-pull.js",
       "scroll": "README.md",
-      "law": "pull.yml"
+      "law": "pull.yml",
+      "symbol": "📥 Pull Scroll",
+      "ritual": [
+        "git pull origin main",
+        "decrypt latest payload with age",
+        "crown and display message",
+        "purge temp staging chamber"
+      ]
     },
     {
       "name": "courier-burn",
       "path": "daemon-suite/courier-burn.js",
       "scroll": "README.md",
-      "law": "burn.yml"
+      "law": "burn.yml",
+      "symbol": "🔥 Burn Scrolls",
+      "ritual": [
+        "scan courier outbox",
+        "incinerate all .age scrolls",
+        "purge temp staging chamber"
+      ]
     },
     {
       "name": "void-transmission",
       "path": "index.html",
       "scroll": "README.md",
-      "law": "serve.yml"
+      "law": "serve.yml",
+      "overlay": "send-button-dropdown",
+      "symbol": "🌌 Gloss Shrine"
     }
   ]
 }

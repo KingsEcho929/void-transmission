@@ -1,13 +1,14 @@
-// courier-pull.js
+#!/usr/bin/env node
 
 const fs = require('fs');
 const path = require('path');
 const { spawnSync } = require('child_process');
+const { cleanTemp } = require('./cleanup');  // ✨ new import
 
 // CONFIG: Puller's name (used to locate their outbox folder and key)
 const pullerName = process.argv[2];
 if (!pullerName) {
-  console.error('❌ Puller name required as argument: node courier-pull.js <pullerName>');
+  console.error('❌ Puller name required as argument: ./courier-pull.js <pullerName>');
   process.exit(1);
 }
 
@@ -17,6 +18,22 @@ const pullerKeyPath = path.resolve(__dirname, '..', 'delivery', 'keys', `${pulle
 // CONFIG: Corridor path (Git repo directory)
 const outboxRoot = path.resolve(__dirname, '..', 'delivery', 'outbox');
 const pullerOutbox = path.join(outboxRoot, pullerName);
+
+// Step 0: Sync corridor with origin main
+function syncCorridor() {
+  console.log('🔄 Pulling latest state from origin main...');
+  const gitPull = spawnSync('git', ['pull', 'origin', 'main'], { encoding: 'utf8' });
+  if (gitPull.error) {
+    console.error('❌ Error running git pull:', gitPull.error.message);
+    return false;
+  }
+  if (gitPull.status !== 0) {
+    console.error('⚠️ git pull failed:', gitPull.stderr.toString());
+    return false;
+  }
+  console.log('✅ Corridor synced with origin main');
+  return true;
+}
 
 // Step 1: Find latest .age file
 function getLatestPayload(dir) {
@@ -50,6 +67,8 @@ function decryptPayload(payloadPath, privateKeyPath) {
 
 // Step 3: Crown the payload
 function crownPull() {
+  if (!syncCorridor()) return;
+
   const payloadPath = getLatestPayload(pullerOutbox);
   if (!payloadPath) {
     console.log('📭 No encrypted payloads found for puller.');
@@ -65,7 +84,9 @@ function crownPull() {
   } else {
     console.log('🕳️ No matching payload for puller key. Daemon returns null with ache glyph.');
   }
+
+  // ✨ Final ritual: purge temp staging chamber
+  cleanTemp();
 }
 
 crownPull();
-

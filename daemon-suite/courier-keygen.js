@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const readline = require('readline');
 const { spawnSync } = require('child_process');
+const { cleanTemp } = require('./cleanup');  // ✨ new import
 
 const KEYS_DIR = path.join(__dirname, '../delivery/keys');
 const CONTACTS_DIR = path.join(__dirname, '../delivery/contacts');
@@ -65,4 +66,7 @@ rl.question('Enter name for keypair: ', (name) => {
   console.log('🔄 Synced all .pub files into contacts.json');
 
   rl.close();
+
+  // ✨ Final ritual: purge temp staging chamber
+  cleanTemp();
 });
